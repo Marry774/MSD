@@ -1,22 +1,18 @@
-import logging
-from time import sleep
-
 import pytest
-from pytest_bdd import scenarios, given, when, then, parsers
+from pytest_bdd import scenarios, given, when, then, parsers, scenario
 from selenium import webdriver
 
 # Constants
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
 from pages.alza.basket import Basket
 from pages.alza.homepage import Homepage
 
 # Scenarios
 from pages.alza.productlist import ProductList
 
-scenarios('../features/websearch.feature')
+
+@scenario('../features/alza.feature', 'Basic Alza basket test')
+def test_basic_alza_basket_test():
+    """Basic Alza basket test."""
 
 
 @pytest.mark.hookwrapper
@@ -43,23 +39,6 @@ def browser():
     b.maximize_window()
     yield b
     b.quit()
-
-
-# Given Steps
-@given(parsers.parse('number {count} by user to countdown'))
-def countdown(count):
-    for i in range(int(count)+1):
-        ii = int(count)-i
-        five = (ii % 5 == 0)
-        three = (ii % 3 == 0)
-        if five and three and int(count) != i:
-            logging.info("%s - Testing" % ii)
-        elif five and int(count) != i:
-            logging.info("%s - Agile" % ii)
-        elif three and int(count) != i:
-            logging.info("%s - Software" % ii)
-        else:
-            logging.info("%s" % ii)
 
 
 # Given Steps
